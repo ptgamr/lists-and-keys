@@ -51,11 +51,13 @@ class App extends Component {
     super(props)
 
     this.state = {
-      todos: [{ id: globalId, name: 'First task!' }]
+      todos: [{ id: globalId, name: 'First task!' }],
+      useIdAsKey: false,
     }
 
     this.onAdd = this.onAdd.bind(this)
     this.handleChange = this.handleChange.bind(this)
+    this.handleCheckbox = this.handleCheckbox.bind(this)
   }
 
   onAdd() {
@@ -83,17 +85,33 @@ class App extends Component {
     this.setState({ todos })
   }
 
+  handleCheckbox(event) {
+    this.setState({
+      useIdAsKey: event.target.checked
+    })
+  }
+
   render() {
-    const { todos } = this.state
+    const { todos, useIdAsKey } = this.state
 
     return (
       <div className="Wrapper">
         <button onClick={this.onAdd}>Add Todo</button>
+        <label>
+          Use id as key
+          <input
+            type="checkbox"
+            checked={useIdAsKey}
+            onChange={this.handleCheckbox} />
+        </label>
         <div className="Todo-wrapper">
-          <h1 className="Title">Key = index</h1>
+          <h1 className="Title">Key = {useIdAsKey ? 'id' : 'index'}</h1>
           {
             todos.map((todo, idx) => (
-              <TodoItem key={todo.id} todo={todo} onChange={this.handleChange}/>
+              <TodoItem
+                key={useIdAsKey ? todo.id : idx}
+                todo={todo}
+                onChange={this.handleChange}/>
             ))
           }
         </div>

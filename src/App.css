@@ -65,6 +65,11 @@ body {
   line-height: var(--lineHeightMd);
 }
 
+label {
+  color: #fff;
+  cursor: pointer;
+}
+
 .Wrapper {
   flex: 1;
 }
