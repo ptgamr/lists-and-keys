@@ -63,26 +63,29 @@ class App extends Component {
   onAdd() {
     globalId ++;
 
-    this.setState({
+    this.setState((state) => ({
       todos: [
         {id: globalId, name: '', done: false},
-        ...this.state.todos,
+        ...state.todos,
       ]
-    })
+    }))
   }
 
   handleChange(todo, name) {
-    const todos = this.state.todos.map(td => {
-      if (td === todo) {
-        return {
-          ...td,
-          name
+    this.setState((state) => {
+      
+      const todos = state.todos.map(td => {
+        if (td === todo) {
+          return {
+            ...td,
+            name
+          }
         }
-      }
-      return td;
+        return td;
+      })
+      
+      return { todos }
     })
-
-    this.setState({ todos })
   }
 
   handleCheckbox(event) {
